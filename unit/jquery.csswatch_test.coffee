@@ -20,19 +20,19 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     equal(@cbcount, 1, "should have 1 change")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    , 400)
   return
 
 QUnit.asyncTest '2 callbacks on event should be triggered and change should be on "color"', 5, ->
   @cbcount = 0
   $('.testdiv').csswatch({props: 'color'})
-  setTimeout(( -> $('.testdiv').addClass("test-color1")) , 30)
-  setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1")) , 60)  
+  setTimeout(( -> $('.testdiv').addClass("test-color1")) , 100)
+  setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1")) , 200)
   setTimeout(( => 
     equal(@cbcount, 2, "should have 2 changes")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    ,400)
   return
 
 QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element', {
@@ -58,19 +58,19 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     equal(@cbcount, 1, "should have 1 change")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    ,300)
   return
 
 QUnit.asyncTest '2 callbacks on event should be triggered and change should be on "color" and "background-color"', 7, ->
   @cbcount = 0
   $('.testdiv').csswatch({props: 'color, background-color'})
-  setTimeout(( -> $('.testdiv').addClass("test-color1").addClass('test-background-color1')) , 30)
-  setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1").addClass('test-background-color2').removeClass('test-background-color1')) , 60)  
+  setTimeout(( -> $('.testdiv').addClass("test-color1").addClass('test-background-color1')) , 100)
+  setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1").addClass('test-background-color2').removeClass('test-background-color1')) , 200)
   setTimeout(( => 
     equal(@cbcount, 2, "should have 2 changes")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    ,400)
   return
 
 
@@ -96,7 +96,7 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     equal(@cbcount, 1, "should have 1 change")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    , 400)
   return
 
 QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element with a custom function', {
@@ -122,7 +122,7 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     equal(@cbcount, 1, "should have 1 change")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    , 400)
   return
 
 QUnit.module 'jQuery Event Test: When testing 2 css attributes on 10 elements with a custom function', {
@@ -146,12 +146,12 @@ QUnit.module 'jQuery Event Test: When testing 2 css attributes on 10 elements wi
   
 QUnit.asyncTest '1 callback on each element event should be triggered and change should be on "width" and "height"', 31, ->
   $('.testdiv').csswatch({props: 'width,height', props_functions: {"width":"width()", "height":"height()"} })
-  setTimeout(( ->  $('.testdiv').addClass("test-size1")), 50)
+  setTimeout(( ->  $('.testdiv').addClass("test-size1")), 100)
   setTimeout(( => 
     equal(@cbcount, 10, "should have 1 change")
     $('.testdiv').off("css-change")    
     start())
-    ,100)
+    , 400)
   return
 
 
@@ -183,13 +183,13 @@ QUnit.asyncTest '1 callback should be triggered and change should be on "color"'
       i++
 
     start())
-    ,100)
+    , 400)
   return
 
 QUnit.asyncTest '2 callbacks should be triggered and change should be on "color"', 5, ->
   @cbcount = 0
-  setTimeout(( -> $('.testdiv').addClass("test-color1")) , 30)
-  setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1")) , 60)  
+  setTimeout(( -> $('.testdiv').addClass("test-color1")) , 100)
+  setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1")) , 200)
   setTimeout(( => 
     equal(@cbcount, 2, "should have 2 change")
     i = 0
@@ -199,7 +199,7 @@ QUnit.asyncTest '2 callbacks should be triggered and change should be on "color"
       i++
 
     start())
-    ,100)
+    , 400)
   return
 
 
@@ -239,5 +239,5 @@ QUnit.asyncTest '1 callback should be triggered and change should be on "color"'
       i++
 
     start())
-    ,100)
+    , 400)
   return

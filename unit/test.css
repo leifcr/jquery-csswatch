@@ -1,0 +1,29 @@
+/*#testarea {
+  min-width:400px;
+  min-height:400px;
+  width:400px;
+  height:400px;
+}
+*/
+/* Test colours */
+.test-color1 { color:green;}
+.test-color2 { color:red; }
+.test-background-color1 { background-color: green;}
+.test-background-color2 { background-color: red; }
+
+/* Border */
+.test-border-width1 { border: 5px solid black; }
+.test-border-width2 { border: 10px solid black; }
+.test-border-color1 { border: 5px solid green; }
+.test-border-color2 { border: 5px solid red; }
+.test-border-style1 { border: 5px solid black; }
+.test-border-style2 { border: 5px dashed black; }
+
+/* position */
+.test-position1 {position: relative; top: 10px; left: 10px;}
+.test-position2 {position: relative; top: 50px; left: 40px;}
+
+/* size */
+.test-size1 {width:100px; height: 100px;}
+.test-size2 {width:200px; height: 200px;}
+

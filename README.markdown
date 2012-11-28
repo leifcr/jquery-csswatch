@@ -29,6 +29,8 @@ Currently these jQuery versions and browsers has been tested:
 
 ### Browsers Tested ###
 * Chrome
+* Internet Explorer 9 (Unit tests hang, example works)
+* Firefox
 
 ### Unit Tests ###
 http://leifcr.github.com/jquery-csswatch/unit/

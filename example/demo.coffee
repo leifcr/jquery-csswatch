@@ -1,4 +1,4 @@
-$ ->
+﻿$ ->
   $('#watch-me-grow').on("css-change", (event, change) =>
     $(".output_grow").text("I'm growing: width: #{change.width} height: #{change.height} ");
   )

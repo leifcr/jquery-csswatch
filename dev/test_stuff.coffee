@@ -1,4 +1,4 @@
-CssWatch = (elem, options) ->
+﻿CssWatch = (elem, options) ->
   @elem = elem
   @$elem = $(elem)
   @options = options

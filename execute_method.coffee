@@ -1,4 +1,4 @@
-###
+﻿###
 # Execute Method
 # (c) 2012 Leif Ringstad
 # Licensed under the freeBSD license (see LICENSE.txt for details)

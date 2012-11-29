@@ -1,12 +1,12 @@
 ﻿###
- jQuery css-watch event Coffeescript v1.2 - 11/20/2012
- http://github.com/leifcr/jquery-csswatch/
- (c) 2012 Leif Ringstad
+jQuery css-watch event Coffeescript v1.2 - 11/20/2012
+http://github.com/leifcr/jquery-csswatch/
+(c) 2012 Leif Ringstad
 
- @author Leif Ringstad
- @version 1.0
-  
- Licensed under the freeBSD license
+@author Leif Ringstad
+@version 1.0
+
+Licensed under the freeBSD license
 ###
 
 # Note that with this pattern, as per Alex Sexton's, the plugin logic
@@ -78,10 +78,10 @@
       set a data element for a css property on the current element
     ###
     setData: (property, value) ->
-      @$elem.data("#{@config.data_attr_name}-#{property}", value)      
+      @$elem.data("#{@config.data_attr_name}-#{property}", value)
 
     ###
-      update data attributes from changes 
+      update data attributes from changes
     ###
     updateDataFromChanges: (changes) ->
       @setData property, changes[property] for property, value in Object.keys(changes)
@@ -97,7 +97,7 @@
       get css property value (from jquery css or from custom function if needed)
     ###
     getPropertyValue: (property) ->
-      return @$elem.css(property) if (@cached_function_name == null) || (Object.keys(@config.props_functions).length == 0) 
+      return @$elem.css(property) if (@cached_function_name == null) || (Object.keys(@config.props_functions).length == 0)
 
       if @cached_function_name == ""
         keys = Object.keys(@config.props_functions)
@@ -239,8 +239,8 @@ unless window.cssWatchRequestAnimationFrame
   window.cssWatchRequestAnimationFrame = (->
     window.webkitAnimationFrame or
     window.webkitRequestAnimationFrame or
-    window.mozRequestAnimationFrame or 
-    window.oRequestAnimationFrame or 
+    window.mozRequestAnimationFrame or
+    window.oRequestAnimationFrame or
     window.msRequestAnimationFrame or
     window.requestAnimationFrame or
     (callback, element) ->
@@ -254,11 +254,11 @@ unless window.cssWatchCancelAnimationFrame
   window.cssWatchCancelAnimationFrame = (->
     window.cancelAnimationFrame or
     window.webkitCancelAnimationFrame or
-    window.webkitCancelRequestAnimationFrame or 
+    window.webkitCancelRequestAnimationFrame or
     window.mozCancelAnimationFrame or
-    window.mozCancelRequestAnimationFrame or 
-    window.oCancelRequestAnimationFrame or 
+    window.mozCancelRequestAnimationFrame or
+    window.oCancelRequestAnimationFrame or
     window.msCancelRequestAnimationFrame or
-    (timeout_id) -> # function FrameRequestCallback 
-      window.clearTimeout timeout_id    
-  )()      
+    (timeout_id) -> # function FrameRequestCallback
+      window.clearTimeout timeout_id
+  )()

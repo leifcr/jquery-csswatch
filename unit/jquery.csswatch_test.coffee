@@ -1,4 +1,4 @@
-﻿QUnit.module 'jQuery Event Test: When testing 1 css attribute on 1 element', {
+QUnit.module 'jQuery Event Test: When testing 1 css attribute on 1 element', {
   setup: ->
     @cbcount = 0
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>")

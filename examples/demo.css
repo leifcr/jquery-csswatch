@@ -91,11 +91,12 @@ div.notifier-area {
   margin-bottom: 20px;
 }
 div.output {
+  float:right;
   right:5px;
   top:100px;
   width:300px;
   height:200px;
-  position:absolute;
+  position:fixed;
 
   /*height:10px;*/
   padding:10px;

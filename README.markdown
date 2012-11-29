@@ -66,9 +66,11 @@ Currently these jQuery versions and browsers has been tested:
 * 1.8.2
 
 ### Browsers Tested ###
-* Chrome
-* Internet Explorer 9
+* Chrome 23
+* Chrome SxS/Canary (25.0.1337 (169859))
+* Internet Explorer 7,8,9
 * Firefox
+* Opera 11.6
 
 ### Unit Tests ###
 http://leifcr.github.com/jquery-csswatch/unit/

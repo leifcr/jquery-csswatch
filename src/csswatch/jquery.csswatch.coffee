@@ -1,10 +1,10 @@
 ###
 jQuery css-watch event Coffeescript v1.2 - 11/20/2012
 http://github.com/leifcr/jquery-csswatch/
-(c) 2012 Leif Ringstad
+(c) 2012-2013 Leif Ringstad
 
 @author Leif Ringstad
-@version 1.0
+@version 1.0.1
 
 Licensed under the freeBSD license
 ###
@@ -23,7 +23,6 @@ Licensed under the freeBSD license
     @$elem = $(elem)
     @options = options
     @cb_timer_id = null
-    @cached_function_name = ""
     @stop_requested = false
     return
 
@@ -51,7 +50,7 @@ Licensed under the freeBSD license
         @start()
 
       @
-    
+
     ###
       split and trim properties
     ###
@@ -86,7 +85,7 @@ Licensed under the freeBSD license
     updateDataFromChanges: (changes) ->
       @setData property, changes[property] for property, value in Object.keys(changes)
       return
-    
+
     ###
       get the datavalue stored for a property
     ###
@@ -97,22 +96,21 @@ Licensed under the freeBSD license
       get css property value (from jquery css or from custom function if needed)
     ###
     getPropertyValue: (property) ->
-      return @$elem.css(property) if (@cached_function_name == null) || (Object.keys(@config.props_functions).length == 0)
+      return @$elem.css(property) if (Object.keys(@config.props_functions).length == 0)
 
-      if @cached_function_name == ""
-        keys = Object.keys(@config.props_functions)
-        if property in keys
-          @cached_function_name = @config.props_functions[property]
-        else
-          @cached_function_name == null
-      
-      if (@cached_function_name != "") && (@cached_function_name != null)
+      function_to_call = null
+      if property in Object.keys(@config.props_functions)
+        function_to_call = @config.props_functions[property]
+      else
+        function_to_call == null
+
+      if function_to_call != null
         if (window.ExecuteMethod)
-          return ExecuteMethod.executeMethodByFunctionName(@cached_function_name, @$elem)
+          return ExecuteMethod.executeMethodByFunctionName(function_to_call, @$elem)
         else
           console.log "You are missing the ExecuteMethod library."
-      else
-        return @$elem.css(property)
+      # Return css value if no function found.
+      @$elem.css(property)
 
     ###
       get object of changes
@@ -157,7 +155,7 @@ Licensed under the freeBSD license
       if (Object.keys(changes).length > 0)
         if @config.use_event
           @$elem.trigger(@config.event_name, changes)
-        
+
         if @config.callback != null
           @config.callback.apply(null, [changes])
           # @config.callback.call({changes})

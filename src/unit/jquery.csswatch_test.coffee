@@ -16,9 +16,9 @@ QUnit.module 'jQuery Event Test: When testing 1 css attribute on 1 element', {
 QUnit.asyncTest '1 callback on event should be triggered and change should be on "color"', 3, ->
   $('.testdiv').csswatch({props: 'color'})
   $('.testdiv').addClass("test-color1")
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 1, "should have 1 change")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     , 400)
@@ -29,9 +29,9 @@ QUnit.asyncTest '2 callbacks on event should be triggered and change should be o
   $('.testdiv').csswatch({props: 'color'})
   setTimeout(( -> $('.testdiv').addClass("test-color1")) , 100)
   setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1")) , 200)
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 2, "should have 2 changes")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     ,400)
@@ -52,13 +52,13 @@ QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element', {
     $('.testdiv').remove()
     return
 }
-  
+
 QUnit.asyncTest '1 callback on event should be triggered and change should be on "color" and "background-color', 4, ->
   $('.testdiv').csswatch({props: 'color, background-color'})
   $('.testdiv').addClass("test-color1").addClass("test-background-color1")
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 1, "should have 1 change")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     ,300)
@@ -69,9 +69,9 @@ QUnit.asyncTest '2 callbacks on event should be triggered and change should be o
   $('.testdiv').csswatch({props: 'color, background-color'})
   setTimeout(( -> $('.testdiv').addClass("test-color1").addClass('test-background-color1')) , 100)
   setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1").addClass('test-background-color2').removeClass('test-background-color1')) , 200)
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 2, "should have 2 changes")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     ,400)
@@ -92,13 +92,13 @@ QUnit.module 'jQuery Event Test: When testing 1 css attribute on 1 element with 
     $('.testdiv').remove()
     return
   }
-  
+
 QUnit.asyncTest '1 callback on event should be triggered and change should be on "top"', 3, ->
   $('.testdiv').csswatch({props: 'top', props_functions: {"top":"offset().top"} })
   $('.testdiv').addClass("test-position1")
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 1, "should have 1 change")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     , 400)
@@ -119,13 +119,25 @@ QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element with
     $('.testdiv').remove()
     return
 }
-  
+
 QUnit.asyncTest '1 callback on event should be triggered and change should be on "top"', 4, ->
   $('.testdiv').csswatch({props: 'top,left', props_functions: {"top":"offset().top", "left":"offset().left"} })
   $('.testdiv').addClass("test-position1")
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 1, "should have 1 change")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
+    $('.testdiv').csswatch('stop')
+    start())
+    , 400)
+  return
+
+QUnit.asyncTest 'Data should be properly set on each element', 2, ->
+  $('.testdiv').csswatch({props: 'top,left', props_functions: {"top":"offset().top", "left":"offset().left"} })
+  equal( $('.testdiv').data().cssWatchDataTop,   $('.testdiv').offset().top, "The top position should be equal to the elements position")
+  equal( $('.testdiv').data().cssWatchDataLeft,  $('.testdiv').offset().left, "The left position should be equal to the elements position")
+
+  setTimeout(( =>
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     , 400)
@@ -149,13 +161,13 @@ QUnit.module 'jQuery Event Test: When testing 2 css attributes on 10 elements wi
     # $('.testdiv').remove()
     return
 }
-  
+
 QUnit.asyncTest '1 callback on each element event should be triggered and change should be on "width" and "height"', 31, ->
   $('.testdiv').csswatch({props: 'width,height', props_functions: {"width":"width()", "height":"height()"} })
   setTimeout(( ->  $('.testdiv').addClass("test-size1")), 100)
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 10, "should have 10 changes")
-    $('.testdiv').off("css-change")    
+    $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
     , 400)
@@ -168,7 +180,7 @@ QUnit.module 'Using direct callback: When testing 1 css attribute on 1 element',
     @changes = []
     @cbcount = 0
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>")
-    $('.testdiv').csswatch({props: 'color', use_event: false, callback: (change) => 
+    $('.testdiv').csswatch({props: 'color', use_event: false, callback: (change) =>
         @cbcount++
         @changes.push(change)
       })
@@ -178,10 +190,10 @@ QUnit.module 'Using direct callback: When testing 1 css attribute on 1 element',
     $('.testdiv').remove()
     return
 }
-  
+
 QUnit.asyncTest '1 callback should be triggered and change should be on "color"', 3, ->
   $('.testdiv').addClass("test-color1")
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 1, "should have 1 change")
     i = 0
     while i < @changes.length
@@ -197,7 +209,7 @@ QUnit.asyncTest '2 callbacks should be triggered and change should be on "color"
   @cbcount = 0
   setTimeout(( -> $('.testdiv').addClass("test-color1")) , 100)
   setTimeout(( -> $('.testdiv').addClass("test-color2").removeClass("test-color1")) , 200)
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cbcount, 2, "should have 2 changes")
     i = 0
     while i < @changes.length
@@ -217,10 +229,10 @@ QUnit.module 'Using direct callback AND event: When testing 1 css attribute on 1
     @cb_callback_count = 0
     @cb_event_count    = 0
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>")
-    $('.testdiv').csswatch({props: 'color', callback: (change) => 
+    $('.testdiv').csswatch({props: 'color', callback: (change) =>
         @cb_callback_count++
         @callback_changes.push(change)
-      
+
       })
     $('.testdiv').on("css-change", (event, change) =>
       @cb_event_count++
@@ -232,10 +244,10 @@ QUnit.module 'Using direct callback AND event: When testing 1 css attribute on 1
     $('.testdiv').remove()
     return
 }
-  
+
 QUnit.asyncTest '1 callback should be triggered and change should be on "color"', 6, ->
   $('.testdiv').addClass("test-color1")
-  setTimeout(( => 
+  setTimeout(( =>
     equal(@cb_callback_count, 1, "should have 1 callback change")
     equal(@cb_event_count, 1, "should have 1 event change")
     i = 0

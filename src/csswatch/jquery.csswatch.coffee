@@ -1,10 +1,11 @@
 ###
-jQuery css-watch event Coffeescript v1.2 - 11/20/2012
+jQuery css-watch event Coffeescript
 http://github.com/leifcr/jquery-csswatch/
 (c) 2012-2013 Leif Ringstad
 
 @author Leif Ringstad
-@version 1.0.1
+@version 1.2.1
+@date 10/27/2013
 
 Licensed under the freeBSD license
 ###

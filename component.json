@@ -1,0 +1,13 @@
+{
+  "name": "jquery-csswatch",
+  "repo": "leifcr/jquery-csswatch",
+  "description": "A CSS Watcher plugin for jquery",
+  "version": "1.2.1",
+  "keywords": ["javascript"],
+  "dependencies": {},
+  "development": {},
+  "main": "dist/jquery-csswatch.js",
+  "scripts": [
+    "dist/jquery-csswatch.min.js"
+  ]
+}

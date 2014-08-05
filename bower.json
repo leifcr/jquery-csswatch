@@ -1,0 +1,35 @@
+{
+  "name": "jquery-csswatch",
+  "version": "1.2.1",
+  "homepage": "https://github.com/leifcr/jquery-csswatch",
+  "authors": [
+    { "name": "Leif Ringstad", "email": "leifcr@gmail.com"," homepage": "http://bitelm.com" }
+  ],
+  "description": "A CSS Watcher plugin for jquery",
+  "main": ["dist/jquery.csswatch.js"],
+  "keywords": [
+    "js",
+    "javascript"
+  ],
+  "ignore": [
+    "**/.*",
+    "dev",
+    "build",
+    "test",
+    "src",
+    "coffeelint.json",
+    "Gruntfile.coffee",
+    "component.json",
+    "*.sublime-project"
+  ],
+  "license": "BSD-2-Clause-FreeBSD",
+  "dependencies": {
+    "execute_method": ">=1.0.4",
+    "jquery": ">= 1.9",
+    "json2":"latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/leifcr/jquery-csswatch.git"
+  }
+}

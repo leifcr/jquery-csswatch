@@ -1,3 +1,39 @@
-*.sublime-*
-tmp*
-zz*
+# Linux/Ubuntu
+*~
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Windows
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# workspace files are user-specific
+*.sublime-workspace
+
+# Keeping sublime project, as it's a great editor.
+# *.sublime-project
+
+# Node modules
+node_modules/*
+
+# Bower components
+bower_components/*
+
+# Project specific:
+
+dev/*
+tmp/*
+build/report*

@@ -2,12 +2,12 @@
 <html>
 <head>
   <title>jQuery CSS watch plugin</title>
-  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">  
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
   <link rel="stylesheet" type="text/css" href="demo.css">
   <script type="text/javascript" src="../shared/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" src="../shared/json2.js"></script>
-  <script type="text/javascript" src="../lib/jquery.csswatch.js"></script>
-  <script type="text/javascript" src="../lib/examples/simple.js"></script>
+<!--  <script type="text/javascript" src="../shared/json2.js"></script> -->
+  <script type="text/javascript" src="../build/jquery.csswatch.js"></script>
+  <script type="text/javascript" src="../build/examples/simple.js"></script>
 </head>
 <body>
   <div class="container">
@@ -48,16 +48,16 @@
 $('#watch-me-grow').on("css-change", (event, change) =>
   $(".output_grow").text("I'm growing: width: #{change.width} height: #{change.height} ");
 )
-$('#watch-me-grow').csswatch({props: 'width,height', 
-                              props_functions: {"width":"width()", "height":"height()"} 
+$('#watch-me-grow').csswatch({props: 'width,height',
+                              props_functions: {"width":"width()", "height":"height()"}
                             })
 
 # for the moving div:
 $('#watch-me-move').on("css-change", (event, change) =>
   $(".output_position").text("I'm growing: width: #{change.width} height: #{change.height} ");
 )
-$('#watch-me-move').csswatch({props: 'top,left', 
-                              props_functions: {"top":"offset().top", "left":"offset().left"} 
+$('#watch-me-move').csswatch({props: 'top,left',
+                              props_functions: {"top":"offset().top", "left":"offset().left"}
                             })
 
 # for the color changing div

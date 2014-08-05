@@ -1,0 +1,28 @@
+{
+  "name": "jquery-csswatch",
+  "version": "1.2.1",
+  "description": "A CSS Watcher plugin for jquery",
+  "main": "Gruntfile.coffee",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:leifcr/jquery-csswatch.git"
+  },
+  "author": "Leif Ringstad",
+  "license": "BSD-2-Clause-FreeBSD",
+  "dependencies": {
+    "execute_method": ">=1.0.4"
+    },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-coffeelint": "~0.0.13",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-croc-qunit": "~0.3.0",
+    "grunt-qunit-istanbul": "^0.4.5",
+    "qunitjs": "~1.14.0",
+    "jquery": ">1.9.0"
+  }
+}

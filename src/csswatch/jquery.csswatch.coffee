@@ -236,12 +236,12 @@ unless Object.keys
 
 unless window.cssWatchRequestAnimationFrame
   window.cssWatchRequestAnimationFrame = (->
+    window.requestAnimationFrame or
     window.webkitAnimationFrame or
     window.webkitRequestAnimationFrame or
     window.mozRequestAnimationFrame or
     window.oRequestAnimationFrame or
     window.msRequestAnimationFrame or
-    window.requestAnimationFrame or
     (callback, element) ->
       window.setTimeout(callback, 1000/60)
   )()

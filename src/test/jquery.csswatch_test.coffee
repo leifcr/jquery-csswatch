@@ -21,7 +21,7 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    , 400)
+    , 300)
   return
 
 QUnit.asyncTest '2 callbacks on event should be triggered and change should be on "color"', 5, ->
@@ -34,7 +34,7 @@ QUnit.asyncTest '2 callbacks on event should be triggered and change should be o
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    ,400)
+    ,300)
   return
 
 QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element', {
@@ -74,7 +74,7 @@ QUnit.asyncTest '2 callbacks on event should be triggered and change should be o
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    ,400)
+    ,300)
   return
 
 
@@ -101,7 +101,7 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    , 400)
+    , 300)
   return
 
 QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element with a custom function', {
@@ -128,7 +128,7 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    , 400)
+    , 300)
   return
 
 QUnit.asyncTest 'Data should be properly set on each element', 2, ->
@@ -140,7 +140,7 @@ QUnit.asyncTest 'Data should be properly set on each element', 2, ->
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    , 400)
+    , 300)
   return
 
 QUnit.module 'jQuery Event Test: When testing 2 css attributes on 10 elements with a custom function', {
@@ -170,7 +170,7 @@ QUnit.asyncTest '1 callback on each element event should be triggered and change
     $('.testdiv').off("css-change")
     $('.testdiv').csswatch('stop')
     start())
-    , 400)
+    , 300)
   return
 
 
@@ -202,7 +202,7 @@ QUnit.asyncTest '1 callback should be triggered and change should be on "color"'
       i++
 
     start())
-    , 400)
+    , 300)
   return
 
 QUnit.asyncTest '2 callbacks should be triggered and change should be on "color"', 5, ->
@@ -218,7 +218,7 @@ QUnit.asyncTest '2 callbacks should be triggered and change should be on "color"
       i++
 
     start())
-    , 400)
+    , 300)
   return
 
 
@@ -259,5 +259,27 @@ QUnit.asyncTest '1 callback should be triggered and change should be on "color"'
       i++
 
     start())
-    , 400)
+    , 300)
+  return
+
+QUnit.module 'Utility functions', {
+  setup: ->
+    @cb_event_count    = 0
+    $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>")
+    $('.testdiv').on("css-change", (event, change) =>
+      @cb_event_count++
+    )
+
+  teardown: ->
+    $('.testdiv').remove()
+    return
+}
+
+QUnit.asyncTest 'Should destroy the plugin', 1, ->
+  $('.testdiv').csswatch({props: 'color'})
+  $('.testdiv').addClass("test-color1")
+  setTimeout(( =>
+    equal($('.testdiv').csswatch('destroy'), null, "should return null when destroying the plugin")
+    start())
+    , 200)
   return

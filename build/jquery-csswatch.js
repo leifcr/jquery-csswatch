@@ -147,11 +147,10 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
       stop csswatch / checking of css attributes
      */
     stop: function() {
-      var stop_requested;
       if (typeof this.config === "undefined" || this.config === null) {
         return;
       }
-      stop_requested = true;
+      this.stop_requested = true;
       return window.cssWatchCancelAnimationFrame(this.cb_timer_id);
     },
 
@@ -206,6 +205,7 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
       this.stop();
       this.$elem.removeData("css-watch-object");
       this.$elem.removeData(this.config.data_attr_name);
+      this.$elem.removeData("removed data_attr_name");
       return null;
     }
   };
@@ -232,45 +232,12 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
       } else if (typeof options === "string") {
         obj = $(this).data("css-watch-object");
         if (obj && obj[options]) {
-          return obj[options].apply(this);
+          return obj[options].apply(obj);
         }
       }
     });
   };
 })(jQuery, window, document);
-
-
-/*
- *
- * Cross browser Object.keys implementation
- *
- * This is suggested implementation from Mozilla for supporting browser that do not implement Object.keys
- * if object doesn't have .keys function
- * if(!Object.keys) Object.keys = function(o){
- *    if (o !== Object(o))
- *       throw new TypeError('Object.keys called on non-object');
- *    var ret=[],p;
- *    for(p in o) if(Object.prototype.hasOwnProperty.call(o,p)) ret.push(p);
- *    return ret;
- * }
- */
-
-if (!Object.keys) {
-  Object.keys = function(o) {
-    var p, ret;
-    if (o !== Object(o)) {
-      throw new TypeError("Object.keys called on non-object");
-    }
-    ret = [];
-    p = void 0;
-    for (p in o) {
-      if (Object.prototype.hasOwnProperty.call(o, p)) {
-        ret.push(p);
-      }
-    }
-    return ret;
-  };
-}
 
 
 /*

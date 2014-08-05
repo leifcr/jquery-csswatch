@@ -128,7 +128,7 @@ Licensed under the freeBSD license
     ###
     stop: ->
       return if (typeof @config == "undefined" || @config == null)
-      stop_requested = true
+      @stop_requested = true
       # stop the timer/windowanimate cb for this object
       window.cssWatchCancelAnimationFrame(@cb_timer_id)
 
@@ -171,6 +171,7 @@ Licensed under the freeBSD license
       @stop()
       @$elem.removeData("css-watch-object")
       @$elem.removeData(@config.data_attr_name)
+      @$elem.removeData("removed data_attr_name")
       return null
 
   ###
@@ -195,7 +196,7 @@ Licensed under the freeBSD license
       else if typeof options is "string"
         obj = $(@).data("css-watch-object")
         if obj && obj[options]
-          obj[options].apply this
+          obj[options].apply obj
 
   return
 

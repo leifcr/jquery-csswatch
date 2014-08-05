@@ -86,6 +86,12 @@ Licensed under the freeBSD license
       return
 
     ###
+      remove data attribute from the element by given property
+    ###
+    removeData: (property) ->
+      @$elem.removeData("#{@config.data_attr_name}-#{property}")
+
+    ###
       get the datavalue stored for a property
     ###
     getDataValue: (property) ->
@@ -170,8 +176,11 @@ Licensed under the freeBSD license
     destroy: ->
       @stop()
       @$elem.removeData("css-watch-object")
+      i = 0
+      while i < @config.props.length
+        @removeData(@config.props[i])
+        i++
       @$elem.removeData(@config.data_attr_name)
-      @$elem.removeData("removed data_attr_name")
       return null
 
   ###
@@ -191,12 +200,12 @@ Licensed under the freeBSD license
         unless data
           obj = new CssWatch(@, options)
           $(@).data("css-watch-object", obj)
-          obj.init()
+          return obj.init()
         return
       else if typeof options is "string"
         obj = $(@).data("css-watch-object")
         if obj && obj[options]
-          obj[options].apply obj
+          return obj[options].apply obj
 
   return
 

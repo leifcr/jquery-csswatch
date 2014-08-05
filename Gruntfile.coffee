@@ -41,8 +41,7 @@ module.exports = (grunt) ->
           "src/*.coffee"
           "src/test/*.coffee"
         ]
-        tasks: ["coffeelint", "coffee:compile_build", "coffee:compile_examples", "coffee:compile_test"]
-        # tasks: ["coffeelint", "coffee:compile_build", "coffee:compile_test", "qunit"]
+        tasks: ["coffeelint", "coffee:compile_build", "coffee:compile_examples", "coffee:compile_test", "qunit"]
 
     qunit:
       options:

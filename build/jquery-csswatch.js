@@ -97,6 +97,13 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
     },
 
     /*
+      remove data attribute from the element by given property
+     */
+    removeData: function(property) {
+      return this.$elem.removeData("" + this.config.data_attr_name + "-" + property);
+    },
+
+    /*
       get the datavalue stored for a property
      */
     getDataValue: function(property) {
@@ -202,10 +209,15 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
      destroy plugin (stop/remove data)
      */
     destroy: function() {
+      var i;
       this.stop();
       this.$elem.removeData("css-watch-object");
+      i = 0;
+      while (i < this.config.props.length) {
+        this.removeData(this.config.props[i]);
+        i++;
+      }
       this.$elem.removeData(this.config.data_attr_name);
-      this.$elem.removeData("removed data_attr_name");
       return null;
     }
   };
@@ -227,7 +239,7 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         if (!data) {
           obj = new CssWatch(this, options);
           $(this).data("css-watch-object", obj);
-          obj.init();
+          return obj.init();
         }
       } else if (typeof options === "string") {
         obj = $(this).data("css-watch-object");

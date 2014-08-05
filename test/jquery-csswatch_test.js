@@ -27,7 +27,7 @@ QUnit.asyncTest('1 callback on event should be triggered and change should be on
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.asyncTest('2 callbacks on event should be triggered and change should be on "color"', 5, function() {
@@ -48,7 +48,7 @@ QUnit.asyncTest('2 callbacks on event should be triggered and change should be o
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.module('jQuery Event Test: When testing 2 css attributes on 1 element', {
@@ -102,7 +102,7 @@ QUnit.asyncTest('2 callbacks on event should be triggered and change should be o
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.module('jQuery Event Test: When testing 1 css attribute on 1 element with a custom function', {
@@ -137,7 +137,7 @@ QUnit.asyncTest('1 callback on event should be triggered and change should be on
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.module('jQuery Event Test: When testing 2 css attributes on 1 element with a custom function', {
@@ -174,7 +174,7 @@ QUnit.asyncTest('1 callback on event should be triggered and change should be on
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.asyncTest('Data should be properly set on each element', 2, function() {
@@ -193,7 +193,7 @@ QUnit.asyncTest('Data should be properly set on each element', 2, function() {
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.module('jQuery Event Test: When testing 2 css attributes on 10 elements with a custom function', {
@@ -234,7 +234,7 @@ QUnit.asyncTest('1 callback on each element event should be triggered and change
       $('.testdiv').csswatch('stop');
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.module('Using direct callback: When testing 1 css attribute on 1 element', {
@@ -273,7 +273,7 @@ QUnit.asyncTest('1 callback should be triggered and change should be on "color"'
       }
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.asyncTest('2 callbacks should be triggered and change should be on "color"', 5, function() {
@@ -296,7 +296,7 @@ QUnit.asyncTest('2 callbacks should be triggered and change should be on "color"
       }
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
 });
 
 QUnit.module('Using direct callback AND event: When testing 1 css attribute on 1 element', {
@@ -345,7 +345,42 @@ QUnit.asyncTest('1 callback should be triggered and change should be on "color"'
       }
       return start();
     };
-  })(this)), 400);
+  })(this)), 300);
+});
+
+QUnit.module('Utility functions', {
+  setup: function() {
+    this.cb_event_count = 0;
+    $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>");
+    return $('.testdiv').on("css-change", (function(_this) {
+      return function(event, change) {
+        return _this.cb_event_count++;
+      };
+    })(this));
+  },
+  teardown: function() {
+    $('.testdiv').remove();
+  }
+});
+
+QUnit.asyncTest('Should destroy the plugin', 2, function() {
+  $('.testdiv').csswatch({
+    props: 'color'
+  });
+  setTimeout((function() {
+    return $('.testdiv').addClass("test-color1");
+  }), 100);
+  setTimeout((function() {
+    return $('.testdiv').csswatch('destroy');
+  }), 200);
+  setTimeout(((function(_this) {
+    return function() {
+      $('.testdiv').removeClass("test-color1");
+      equal(_this.cb_event_count, 1, "Should only have triggered callback once");
+      equal($('.testdiv').data("css-watch-data-color"), void 0, "Data value for color should be undefined after destruction");
+      return start();
+    };
+  })(this)), 300);
 });
 
 //# sourceMappingURL=jquery-csswatch_test.js.map

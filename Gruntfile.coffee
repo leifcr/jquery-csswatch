@@ -24,7 +24,7 @@ module.exports = (grunt) ->
         separator: ";\n"
         stripBanners: true
       dist:
-        src: ["build/jquery-csswatch.js"]
+        src: ["build/jquery-csswatch.js", "build/object_keys.js"]
         dest: 'dist/<%= package_name %>.js'
 
     uglify:
@@ -61,7 +61,8 @@ module.exports = (grunt) ->
           bare: true
           sourceMap: true
         files:
-          'build/<%= package_name %>.js' : ['src/*.coffee']
+          'build/<%= package_name %>.js' : ['src/jquery.csswatch.coffee']
+          'build/object_keys.js' : ['src/object_keys.coffee']
 
       compile_examples:
         options:

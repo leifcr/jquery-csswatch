@@ -43,9 +43,12 @@ QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element', {
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>")
     $('.testdiv').on("css-change", (event, change) =>
       @cbcount++
-      equal(Object.keys(change).length, 2, "Number of changes in single callback should be 2")
-      equal(Object.keys(change)[0], "color", "Name of change should be 'color'")
-      equal(Object.keys(change)[1], "background-color", "Name of change should be 'background-color'")
+      equal(Object.keys(change).length, 2,
+        "Number of changes in single callback should be 2")
+      equal(Object.keys(change)[0], "color",
+        "Name of change should be 'color'")
+      equal(Object.keys(change)[1], "background-color",
+        "Name of change should be 'background-color'")
     )
 
   teardown: ->
@@ -53,7 +56,7 @@ QUnit.module 'jQuery Event Test: When testing 2 css attributes on 1 element', {
     return
 }
 
-QUnit.asyncTest '1 callback on event should be triggered and change should be on "color" and "background-color', 4, ->
+QUnit.asyncTest 'should trigger 1 callback and verify change on color and background-color', 4, ->
   $('.testdiv').csswatch({props: 'color, background-color'})
   $('.testdiv').addClass("test-color1").addClass("test-background-color1")
   setTimeout(( =>
@@ -143,7 +146,10 @@ QUnit.asyncTest '1 callback on event should be triggered and change should be on
   return
 
 QUnit.asyncTest 'Data should be properly set on each element', 2, ->
-  $('.testdiv').csswatch({props: 'top,left', props_functions: {"top":"offset().top", "left":"offset().left"} })
+  $('.testdiv').csswatch({
+    props: 'top,left',
+    props_functions: {"top":"offset().top", "left":"offset().left"}
+    })
   equal( $('.testdiv').data().cssWatchDataTop,   $('.testdiv').offset().top,
     "The top position should be equal to the elements position")
   equal( $('.testdiv').data().cssWatchDataLeft,  $('.testdiv').offset().left,

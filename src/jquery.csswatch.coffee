@@ -15,41 +15,45 @@ Licensed under the freeBSD license
 (($, window, document) ->
 
   ###
-    Plugin constructor
-  ###
-  CssWatch = (elem, options) ->
-    @elem = elem
-    @$elem = $(elem)
-    @options = options
-    @cb_timer_id = null
-    @stop_requested = false
-    return
+    Request Animation frame shim
+    References
+    http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
 
   ###
-    Class functions
-  ###
-  CssWatch.cssWatchRequestAnimationFrame = (->
-    window.requestAnimationFrame or
-    window.webkitAnimationFrame or
+  window.cssWatchRequestAnimationFrame = (->
+    window.requestAnimationFrame       or
+    window.webkitAnimationFrame        or
     window.webkitRequestAnimationFrame or
-    window.mozRequestAnimationFrame or
-    window.oRequestAnimationFrame or
-    window.msRequestAnimationFrame or
+    window.mozRequestAnimationFrame    or
+    window.oRequestAnimationFrame      or
+    window.msRequestAnimationFrame     or
     (callback, element) ->
       window.setTimeout(callback, 1000/60)
   )()
 
-  CssWatch.cssWatchCancelAnimationFrame = (->
-    window.cancelAnimationFrame or
-    window.webkitCancelAnimationFrame or
+  window.cssWatchCancelAnimationFrame = (->
+    window.cancelAnimationFrame              or
+    window.webkitCancelAnimationFrame        or
     window.webkitCancelRequestAnimationFrame or
-    window.mozCancelAnimationFrame or
-    window.mozCancelRequestAnimationFrame or
-    window.oCancelRequestAnimationFrame or
-    window.msCancelRequestAnimationFrame or
+    window.mozCancelAnimationFrame           or
+    window.mozCancelRequestAnimationFrame    or
+    window.oCancelRequestAnimationFrame      or
+    window.msCancelRequestAnimationFrame     or
     (timeout_id) -> # function FrameRequestCallback
       window.clearTimeout timeout_id
   )()
+
+
+  ###
+    Plugin constructor
+  ###
+  CssWatch = (elem, options) ->
+    @elem           = elem
+    @$elem          = $(elem)
+    @options        = options
+    @cb_timer_id    = null
+    @stop_requested = false
+    return
 
   ###
     Plugin prototype
@@ -162,7 +166,7 @@ Licensed under the freeBSD license
       return if (typeof @config == "undefined" || @config == null)
       @stop_requested = true
       # stop the timer/windowanimate cb for this object
-      CssWatch.cssWatchCancelAnimationFrame(@cb_timer_id)
+      window.cssWatchCancelAnimationFrame(@cb_timer_id)
 
 
     ###
@@ -172,15 +176,15 @@ Licensed under the freeBSD license
       return if (typeof @config == "undefined" || @config == null)
       @stop_requested = false
       # start the timer/windowanimate cb for this object if it isn't running
-      @cb_timer_id = CssWatch.cssWatchRequestAnimationFrame(=> @check(); return)
+      @cb_timer_id = window.cssWatchRequestAnimationFrame(=> @check(); return)
       return
 
     ###
       the actual checking of changes
     ###
     check: ->
-      return false if (typeof @config == "undefined" || @config == null)
       return false if @stop_requested == true
+      return false if (typeof @config == "undefined" || @config == null)
       changes = @changedProperties()
 
       if (Object.keys(changes).length > 0)
@@ -193,8 +197,14 @@ Licensed under the freeBSD license
         # set new data for each changed property
         @updateDataFromChanges(changes)
 
-      @cb_timer_id = CssWatch.cssWatchRequestAnimationFrame(=> @check(); return)
+      @cb_timer_id = window.cssWatchRequestAnimationFrame(=> @check(); return)
       false
+
+    ###
+      check if the watcher is running
+    ###
+    isRunning: ->
+      @stop_requested == false
 
     ###
      destroy plugin (stop/remove data)
@@ -235,40 +245,5 @@ Licensed under the freeBSD license
 
   return
 
-  #optional: window.Plugin = Plugin;
 
 ) jQuery, window, document
-
-
-###
-  Cross browser requestAnimationFrame
-  Not including settimeout as it will have a static value for timeout
-###
-
-# unless window.cssWatchRequestAnimationFrame
-#   window.cssWatchRequestAnimationFrame = (->
-#     window.requestAnimationFrame or
-#     window.webkitAnimationFrame or
-#     window.webkitRequestAnimationFrame or
-#     window.mozRequestAnimationFrame or
-#     window.oRequestAnimationFrame or
-#     window.msRequestAnimationFrame or
-#     (callback, element) ->
-#       window.setTimeout(callback, 1000/60)
-#   )()
-
-# ###
-#   Cross browser cancelAnimationFrame
-# ###
-# unless window.cssWatchCancelAnimationFrame
-#   window.cssWatchCancelAnimationFrame = (->
-#     window.cancelAnimationFrame or
-#     window.webkitCancelAnimationFrame or
-#     window.webkitCancelRequestAnimationFrame or
-#     window.mozCancelAnimationFrame or
-#     window.mozCancelRequestAnimationFrame or
-#     window.oCancelRequestAnimationFrame or
-#     window.msCancelRequestAnimationFrame or
-#     (timeout_id) -> # function FrameRequestCallback
-#       window.clearTimeout timeout_id
-#   )()

@@ -11,7 +11,7 @@ For now, please see the tests and examples
 ## Usage ##
 This is both released as a bower component and a npm module, to suit whatever build tool/env you are using for your frontend.
 
-Using npm
+### Using npm ###
 ```
 npm install jquery-csswatch
 ```
@@ -21,10 +21,16 @@ npm install jquery-csswatch
 <script type="text/javascript" src="../node_modules/jquery-csswatch/dist/jquery-csswatch.js"></script>
 ```
 
-Using bower
+### Using bower ###
 
+```
+bower install jquery-csswatch
+```
 
-
+```html
+<script type="text/javascript" src="../bower_components/execute_method/dist/execute_method.js"></script>
+<script type="text/javascript" src="../bower_components/jquery-csswatch/dist/jquery-csswatch.js"></script>
+```
 
 ## Building ##
 You need to setup grunt + npm to develop/build

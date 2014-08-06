@@ -26,6 +26,32 @@ Licensed under the freeBSD license
     return
 
   ###
+    Class functions
+  ###
+  CssWatch.cssWatchRequestAnimationFrame = (->
+    window.requestAnimationFrame or
+    window.webkitAnimationFrame or
+    window.webkitRequestAnimationFrame or
+    window.mozRequestAnimationFrame or
+    window.oRequestAnimationFrame or
+    window.msRequestAnimationFrame or
+    (callback, element) ->
+      window.setTimeout(callback, 1000/60)
+  )()
+
+  CssWatch.cssWatchCancelAnimationFrame = (->
+    window.cancelAnimationFrame or
+    window.webkitCancelAnimationFrame or
+    window.webkitCancelRequestAnimationFrame or
+    window.mozCancelAnimationFrame or
+    window.mozCancelRequestAnimationFrame or
+    window.oCancelRequestAnimationFrame or
+    window.msCancelRequestAnimationFrame or
+    (timeout_id) -> # function FrameRequestCallback
+      window.clearTimeout timeout_id
+  )()
+
+  ###
     Plugin prototype
   ###
   CssWatch:: =
@@ -136,7 +162,7 @@ Licensed under the freeBSD license
       return if (typeof @config == "undefined" || @config == null)
       @stop_requested = true
       # stop the timer/windowanimate cb for this object
-      window.cssWatchCancelAnimationFrame(@cb_timer_id)
+      CssWatch.cssWatchCancelAnimationFrame(@cb_timer_id)
 
 
     ###
@@ -146,7 +172,7 @@ Licensed under the freeBSD license
       return if (typeof @config == "undefined" || @config == null)
       @stop_requested = false
       # start the timer/windowanimate cb for this object if it isn't running
-      @cb_timer_id = window.cssWatchRequestAnimationFrame(=> @check(); return)
+      @cb_timer_id = CssWatch.cssWatchRequestAnimationFrame(=> @check(); return)
       return
 
     ###
@@ -167,7 +193,7 @@ Licensed under the freeBSD license
         # set new data for each changed property
         @updateDataFromChanges(changes)
 
-      @cb_timer_id = window.cssWatchRequestAnimationFrame(=> @check(); return)
+      @cb_timer_id = CssWatch.cssWatchRequestAnimationFrame(=> @check(); return)
       false
 
     ###
@@ -219,30 +245,30 @@ Licensed under the freeBSD license
   Not including settimeout as it will have a static value for timeout
 ###
 
-unless window.cssWatchRequestAnimationFrame
-  window.cssWatchRequestAnimationFrame = (->
-    window.requestAnimationFrame or
-    window.webkitAnimationFrame or
-    window.webkitRequestAnimationFrame or
-    window.mozRequestAnimationFrame or
-    window.oRequestAnimationFrame or
-    window.msRequestAnimationFrame or
-    (callback, element) ->
-      window.setTimeout(callback, 1000/60)
-  )()
+# unless window.cssWatchRequestAnimationFrame
+#   window.cssWatchRequestAnimationFrame = (->
+#     window.requestAnimationFrame or
+#     window.webkitAnimationFrame or
+#     window.webkitRequestAnimationFrame or
+#     window.mozRequestAnimationFrame or
+#     window.oRequestAnimationFrame or
+#     window.msRequestAnimationFrame or
+#     (callback, element) ->
+#       window.setTimeout(callback, 1000/60)
+#   )()
 
-###
-  Cross browser cancelAnimationFrame
-###
-unless window.cssWatchCancelAnimationFrame
-  window.cssWatchCancelAnimationFrame = (->
-    window.cancelAnimationFrame or
-    window.webkitCancelAnimationFrame or
-    window.webkitCancelRequestAnimationFrame or
-    window.mozCancelAnimationFrame or
-    window.mozCancelRequestAnimationFrame or
-    window.oCancelRequestAnimationFrame or
-    window.msCancelRequestAnimationFrame or
-    (timeout_id) -> # function FrameRequestCallback
-      window.clearTimeout timeout_id
-  )()
+# ###
+#   Cross browser cancelAnimationFrame
+# ###
+# unless window.cssWatchCancelAnimationFrame
+#   window.cssWatchCancelAnimationFrame = (->
+#     window.cancelAnimationFrame or
+#     window.webkitCancelAnimationFrame or
+#     window.webkitCancelRequestAnimationFrame or
+#     window.mozCancelAnimationFrame or
+#     window.mozCancelRequestAnimationFrame or
+#     window.oCancelRequestAnimationFrame or
+#     window.msCancelRequestAnimationFrame or
+#     (timeout_id) -> # function FrameRequestCallback
+#       window.clearTimeout timeout_id
+#   )()

@@ -1,10 +1,8 @@
 $(function() {
   var change_background_color, change_color, random_color, random_tofivefive;
-  $('#watch-me-grow').on("css-change", (function(_this) {
-    return function(event, change) {
-      return $(".output_grow").text("I'm growing: width: " + change.width + " height: " + change.height + " ");
-    };
-  })(this));
+  $('#watch-me-grow').on("css-change", function(event, change) {
+    return $(".output_grow").text("I'm growing: width: " + change.width + " height: " + change.height + " ");
+  });
   $('#watch-me-grow').csswatch({
     props: 'width,height',
     props_functions: {
@@ -12,11 +10,9 @@ $(function() {
       "height": "height()"
     }
   });
-  $('#watch-me-move').on("css-change", (function(_this) {
-    return function(event, change) {
-      return $(".output_position").text("I'm moving: top: " + change.top + " left: " + change.left + " ");
-    };
-  })(this));
+  $('#watch-me-move').on("css-change", function(event, change) {
+    return $(".output_position").text("I'm moving: top: " + change.top + " left: " + change.left + " ");
+  });
   $('#watch-me-move').csswatch({
     props: 'top,left',
     props_functions: {
@@ -24,11 +20,9 @@ $(function() {
       "left": "offset().left"
     }
   });
-  $('#watch-me-change-colors').on("css-change", (function(_this) {
-    return function(event, change) {
-      return $(".output_colors").text("I got some new colors: " + (JSON.stringify(change)));
-    };
-  })(this));
+  $('#watch-me-change-colors').on("css-change", function(event, change) {
+    return $(".output_colors").text("I got some new colors: " + (JSON.stringify(change)));
+  });
   $('#watch-me-change-colors').csswatch({
     props: 'color,background-color'
   });

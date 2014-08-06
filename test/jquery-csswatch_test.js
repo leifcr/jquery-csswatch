@@ -69,7 +69,7 @@ QUnit.module('jQuery Event Test: When testing 2 css attributes on 1 element', {
   }
 });
 
-QUnit.asyncTest('1 callback on event should be triggered and change should be on "color" and "background-color', 4, function() {
+QUnit.asyncTest('should trigger 1 callback and verify change on color and background-color', 4, function() {
   $('.testdiv').csswatch({
     props: 'color, background-color'
   });
@@ -84,7 +84,7 @@ QUnit.asyncTest('1 callback on event should be triggered and change should be on
   })(this)), 300);
 });
 
-QUnit.asyncTest('2 callbacks on event should be triggered and change should be on "color" and "background-color"', 7, function() {
+QUnit.asyncTest('should trigger 2 callbacks and verify change on "color and background-color', 7, function() {
   this.cbcount = 0;
   $('.testdiv').csswatch({
     props: 'color, background-color'
@@ -105,7 +105,7 @@ QUnit.asyncTest('2 callbacks on event should be triggered and change should be o
   })(this)), 300);
 });
 
-QUnit.module('jQuery Event Test: When testing 1 css attribute on 1 element with a custom function', {
+QUnit.module('jQuery Event Test: testing 1 css attribute on 1 element with a custom function', {
   setup: function() {
     this.cbcount = 0;
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>");
@@ -140,7 +140,7 @@ QUnit.asyncTest('1 callback on event should be triggered and change should be on
   })(this)), 300);
 });
 
-QUnit.module('jQuery Event Test: When testing 2 css attributes on 1 element with a custom function', {
+QUnit.module('jQuery Event Test: testing 2 css attributes on 1 element with a custom function', {
   setup: function() {
     this.cbcount = 0;
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>");
@@ -187,16 +187,14 @@ QUnit.asyncTest('Data should be properly set on each element', 2, function() {
   });
   equal($('.testdiv').data().cssWatchDataTop, $('.testdiv').offset().top, "The top position should be equal to the elements position");
   equal($('.testdiv').data().cssWatchDataLeft, $('.testdiv').offset().left, "The left position should be equal to the elements position");
-  setTimeout(((function(_this) {
-    return function() {
-      $('.testdiv').off("css-change");
-      $('.testdiv').csswatch('stop');
-      return start();
-    };
-  })(this)), 300);
+  setTimeout((function() {
+    $('.testdiv').off("css-change");
+    $('.testdiv').csswatch('stop');
+    return start();
+  }), 300);
 });
 
-QUnit.module('jQuery Event Test: When testing 2 css attributes on 10 elements with a custom function', {
+QUnit.module('Event Test: 2 css attributes on 10 elements with a custom function', {
   setup: function() {
     var testdivnum;
     this.cbcount = 0;
@@ -216,7 +214,7 @@ QUnit.module('jQuery Event Test: When testing 2 css attributes on 10 elements wi
   teardown: function() {}
 });
 
-QUnit.asyncTest('1 callback on each element event should be triggered and change should be on "width" and "height"', 31, function() {
+QUnit.asyncTest('1 callback on each element triggers and sees change on width and height', 31, function() {
   $('.testdiv').csswatch({
     props: 'width,height',
     props_functions: {
@@ -348,7 +346,7 @@ QUnit.asyncTest('1 callback should be triggered and change should be on "color"'
   })(this)), 300);
 });
 
-QUnit.module('Utility functions', {
+QUnit.module('Other functionality', {
   setup: function() {
     this.cb_event_count = 0;
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>");
@@ -361,6 +359,18 @@ QUnit.module('Utility functions', {
   teardown: function() {
     $('.testdiv').remove();
   }
+});
+
+QUnit.asyncTest('Should not start when no props are set', 1, function() {
+  $('.testdiv').csswatch({
+    props: ''
+  });
+  setTimeout((function() {
+    var el;
+    el = $('.testdiv')[0];
+    equal($(el).data("css-watch-object").isRunning(), false, "should not have started");
+    return start();
+  }), 50);
 });
 
 QUnit.asyncTest('Should destroy the plugin', 2, function() {

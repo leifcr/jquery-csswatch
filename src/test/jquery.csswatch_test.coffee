@@ -304,7 +304,7 @@ QUnit.asyncTest '1 callback should be triggered and change should be on "color"'
     , 300)
   return
 
-QUnit.module 'Utility functions', {
+QUnit.module 'Other functionality', {
   setup: ->
     @cb_event_count    = 0
     $('#qunit-fixture').prepend("<div class=\"testdiv\">This is the testing div</div>")
@@ -316,6 +316,20 @@ QUnit.module 'Utility functions', {
     $('.testdiv').remove()
     return
 }
+
+QUnit.asyncTest 'Should not start when no props are set', 1, ->
+  $('.testdiv').csswatch({
+    props: ''
+    })
+
+  setTimeout(( ->
+    el = $('.testdiv')[0]
+    equal($(el).data("css-watch-object").isRunning(), false,
+      "should not have started")
+    start()
+    ) , 50)
+  return
+
 
 QUnit.asyncTest 'Should destroy the plugin', 2, ->
   $('.testdiv').csswatch({

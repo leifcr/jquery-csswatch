@@ -13,15 +13,32 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
 (function($, window, document) {
 
   /*
-    Plugin constructor
+    Request Animation frame shim
+    References
+    http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
    */
   var CssWatch;
+  window.cssWatchRequestAnimationFrame = (function() {
+    return window.requestAnimationFrame || window.webkitAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
+      return window.setTimeout(callback, 1000 / 60);
+    };
+  })();
+  window.cssWatchCancelAnimationFrame = (function() {
+    return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame || window.mozCancelAnimationFrame || window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame || window.msCancelRequestAnimationFrame || function(timeout_id) {
+      return window.clearTimeout(timeout_id);
+    };
+  })();
+
+  /*
+    Plugin constructor
+   */
   CssWatch = function(elem, options) {
     this.elem = elem;
     this.$elem = $(elem);
     this.options = options;
     this.cb_timer_id = null;
     this.stop_requested = false;
+    this.running = false;
   };
 
   /*
@@ -55,8 +72,12 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
      */
     splitAndTrimProps: function(props) {
       var arr, i, ret;
-      arr = props.split(",");
+      props = props.trim();
       ret = [];
+      if (props.length === 0) {
+        return ret;
+      }
+      arr = props.split(",");
       i = 0;
       while (i < arr.length) {
         ret.push(arr[i].trim());
@@ -158,6 +179,7 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         return;
       }
       this.stop_requested = true;
+      this.running = false;
       return window.cssWatchCancelAnimationFrame(this.cb_timer_id);
     },
 
@@ -169,6 +191,7 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         return;
       }
       this.stop_requested = false;
+      this.running = true;
       this.cb_timer_id = window.cssWatchRequestAnimationFrame((function(_this) {
         return function() {
           _this.check();
@@ -181,10 +204,10 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
      */
     check: function() {
       var changes;
-      if (typeof this.config === "undefined" || this.config === null) {
+      if (this.stop_requested === true) {
         return false;
       }
-      if (this.stop_requested === true) {
+      if (typeof this.config === "undefined" || this.config === null) {
         return false;
       }
       changes = this.changedProperties();
@@ -203,6 +226,13 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         };
       })(this));
       return false;
+    },
+
+    /*
+      check if the watcher is running
+     */
+    isRunning: function() {
+      return this.running === true;
     },
 
     /*
@@ -250,32 +280,5 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
     });
   };
 })(jQuery, window, document);
-
-
-/*
-  Cross browser requestAnimationFrame
-  Not including settimeout as it will have a static value for timeout
- */
-
-if (!window.cssWatchRequestAnimationFrame) {
-  window.cssWatchRequestAnimationFrame = (function() {
-    return window.requestAnimationFrame || window.webkitAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
-      return window.setTimeout(callback, 1000 / 60);
-    };
-  })();
-}
-
-
-/*
-  Cross browser cancelAnimationFrame
- */
-
-if (!window.cssWatchCancelAnimationFrame) {
-  window.cssWatchCancelAnimationFrame = (function() {
-    return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame || window.mozCancelAnimationFrame || window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame || window.msCancelRequestAnimationFrame || function(timeout_id) {
-      return window.clearTimeout(timeout_id);
-    };
-  })();
-}
 
 //# sourceMappingURL=jquery-csswatch.js.map

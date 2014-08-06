@@ -53,6 +53,7 @@ Licensed under the freeBSD license
     @options        = options
     @cb_timer_id    = null
     @stop_requested = false
+    @running        = false
     return
 
   ###
@@ -84,8 +85,10 @@ Licensed under the freeBSD license
       split and trim properties
     ###
     splitAndTrimProps: (props) ->
-      arr = props.split(",")
+      props = props.trim()
       ret = []
+      return ret if props.length == 0
+      arr = props.split(",")
       i = 0
       while i < arr.length
         ret.push arr[i].trim()
@@ -165,6 +168,7 @@ Licensed under the freeBSD license
     stop: ->
       return if (typeof @config == "undefined" || @config == null)
       @stop_requested = true
+      @running        = false
       # stop the timer/windowanimate cb for this object
       window.cssWatchCancelAnimationFrame(@cb_timer_id)
 
@@ -175,6 +179,7 @@ Licensed under the freeBSD license
     start: ->
       return if (typeof @config == "undefined" || @config == null)
       @stop_requested = false
+      @running        = true
       # start the timer/windowanimate cb for this object if it isn't running
       @cb_timer_id = window.cssWatchRequestAnimationFrame(=> @check(); return)
       return
@@ -204,7 +209,7 @@ Licensed under the freeBSD license
       check if the watcher is running
     ###
     isRunning: ->
-      @stop_requested == false
+      @running == true
 
     ###
      destroy plugin (stop/remove data)

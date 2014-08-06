@@ -2,39 +2,70 @@
 <html>
 <head>
   <title>jQuery CSS Watch Plugin - test stuff</title>
-  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">  
-  <link rel="stylesheet" href="./unit/test.css" type="text/css" media="screen">
-  <script type="text/javascript" src="./shared/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" src="./jquery.csswatch.js"></script>
-  <script type="text/javascript" src="./coffee-script.js"></script>
-  <script type="text/coffeescript">
-$ ->
-  count = 0
-  $('.testdiv').csswatch({props: 'color, background-color'}).on("css-change", (event, changed_data, jquery_element, dom_element) -> 
-    console.log event.currentTarget.innerText
-    console.log changed_data;
-    )
-
-  window.changecolor = ->
-    # console.log $('.testdiv').css("color", "background-color")
-    # if $('.testdiv').css("color") == 'rgb(255, 0, 51)'
-    #   $('.testdiv').css("color", 'rgb(0,51,255)')
-    #   $('.bg').css("background-color", 'rgb(255,0,255)')
-    # else
-    #   $('.testdiv').css("color", 'rgb(255,0,51)')
-    #   $('.bg').css("background-color", 'rgb(0,255,255)')
-
-    if $('.testdiv-class').hasClass('test-color1')
-      $('.testdiv-class').addClass('test-color2').removeClass('test-color1')
-    else
-      $('.testdiv-class').addClass('test-color1').removeClass('test-color2')
-  return
-  </script>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <style type="text/css">
+  .test-color1 {
+    color:red;
+    background-color: green;
+  }
+  .test-color2 {
+    color: blue;
+    background-color: white;
+  }
+  .testdiv {
+    width: 100px;
+    height: 100px;
+    border: solid 1px grey;
+    margin:10px;
+    font-size: 2em;
+  }
+  a {
+    margin:10px;
+  }
+  </style>
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="../node_modules/execute_method/dist/execute_method.js"></script>
+  <script type="text/javascript" src="../build/jquery-csswatch.js"></script>
+  <script type="text/javascript">
+$(function() {
+  var count;
+  count = 0;
+  $('.testdiv').csswatch({
+    props: 'color, background-color'
+  }).on("css-change", function(event, changed_data, jquery_element, dom_element) {
+    console.log(event.currentTarget.innerText);
+    console.log(changed_data);
+  });
+  window.changeElementColor = function() {
+    if($('.color').css("color") === "rgb(255, 0, 0)") {
+      $('.color').css("color", "rgb(0, 0, 255)")
+    } else {
+      $('.color').css("color", "rgb(255, 0, 0)")
+    }
+  }
+  window.changeElementBackgroundColor = function() {
+    if($('.bgcolor').css("background-color") === "rgb(255, 0, 0)") {
+      $('.bgcolor').css("background-color", "rgb(0, 0, 255)")
+    } else {
+      $('.bgcolor').css("background-color", "rgb(255, 0, 0)")
+    }
+  }
+  window.changeClassColor = function() {
+    if ($('.testdiv-class').hasClass('test-color1')) {
+      $('.testdiv-class').addClass('test-color2').removeClass('test-color1');
+    } else {
+      $('.testdiv-class').addClass('test-color1').removeClass('test-color2');
+    }
+  };
+});
+</script>
 </head>
 <body>
-  <div class="testdiv">Test something 1</div>
-  <div class="testdiv bg">Test something 2</div>
-  <div class="testdiv testdiv-class">Test something with classes</div>
-  <p><a href="#" onClick="changecolor();return false">Change color</a></p>
+  <div class="testdiv color">Div 1</div>
+  <p><a href="#" onClick="changeElementColor();return false">Change color on "Div 1"</a></p>
+  <div class="testdiv bgcolor">Div 2</div>
+  <p><a href="#" onClick="changeElementBackgroundColor();return false">Change background-color on "Div 2"</a></p>
+  <div class="testdiv testdiv-class">"Div 3"</div>
+  <p><a href="#" onClick="changeClassColor();return false">Change class on "Div 3"</a></p>
 </body>
 </html>

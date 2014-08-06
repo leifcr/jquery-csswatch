@@ -8,34 +8,32 @@ It uses requestAnimationFrame _(webkitRequestAnimationFrame, mozRequestAnimation
 ## Documentation ##
 For now, please see the tests and examples
 
-## Building ##
-You need to install CoffeeScript before building.
+## Usage ##
+This is both released as a bower component and a npm module, to suit whatever build tool/env you are using for your frontend.
+
+Using npm
 ```
-  # Build library, tests and examples
-  cake build
+npm install jquery-csswatch
+```
 
-  # Build library
-  cake build:library
+```html
+<script type="text/javascript" src="../node_modules/execute_method/dist/execute_method.js"></script>
+<script type="text/javascript" src="../node_modules/jquery-csswatch/dist/jquery-csswatch.js"></script>
+```
 
-  # Build tests
-  cake build:tests
+Using bower
 
-  # Build examples
-  cake build:examples
 
-  # Watch library for changes
-  cake watch
-  # or
-  cake watch:library 
 
-  # Watch tests
-  cake watch:tests
 
-  # Watch examples
-  cake watch:examples
+## Building ##
+You need to setup grunt + npm to develop/build
+```
+  # install dependencies
+  npm install
 
-  # Build and run unit tests (needs a browser)
-  cake test
+  # Build library, run unit tests and create minified version
+  grunt
 
 ```
 
@@ -47,7 +45,7 @@ See [http://leifcr.github.com/jquery-csswatch/examples/](http://leifcr.github.co
 
 * jQuery 1.8+
 
-* execute_method (http://github.com/leifcr/execute_method) (Already included in this package)
+* execute_method (http://github.com/leifcr/execute_method)
 
 ##### For building:
 
@@ -55,15 +53,14 @@ See [http://leifcr.github.com/jquery-csswatch/examples/](http://leifcr.github.co
 
 
 ## Development ##
-Development is made in chrome and firefox on jQuery 1.8.2. Please fork, make a feature or bugfix branch and request a pull request. I'm sure there are bugs to be hunted down.
+Development is made in chrome and firefox on jQuery 2.x. Please fork, make a feature or bugfix branch and request a pull request.
 
 ## Testing ##
-The library and unit tests needs to be built before testing. Direct compilation of coffeescript fails in some rare cases, and it's therefore better to compile before testing.
-
-Currently these jQuery versions and browsers has been tested:
 
 ### jQuery Versions ###
-* 1.8.2
+* 1.8.x
+* 1.9.x
+* 2.1.x
 
 ### Browsers Tested ###
 * Chrome 23
@@ -76,8 +73,9 @@ Currently these jQuery versions and browsers has been tested:
 http://leifcr.github.com/jquery-csswatch/unit/
 
 ## Release History ##
-
-1.0 - (2012-11-22) Initial release
+1.3.0 - (2014-08-06) Moved to npm/bower packaging
+1.2.1 - (2013-10-27) Improved version, using cake
+1.0   - (2012-11-22) Initial release
 
 ## License ##
 Copyright (c) 2012 Leif Ringstad

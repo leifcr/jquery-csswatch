@@ -73,7 +73,7 @@ Development is made in chrome and firefox on jQuery 2.x. Please fork, make a fea
 http://leifcr.github.com/jquery-csswatch/unit/
 
 ## Release History ##
-1.3.0 - (2014-08-06) Moved to npm/bower packaging
+1.3.0 - (2014-08-06) Moved to npm/bower packaging. ExecuteMethod added as a dependency
 1.2.1 - (2013-10-27) Improved version, using cake
 1.0   - (2012-11-22) Initial release
 

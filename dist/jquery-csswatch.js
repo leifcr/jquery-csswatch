@@ -1,10 +1,10 @@
 /*!
-  jquery-csswatch 1.3.0
+  jquery-csswatch 1.3.1
 
   Copyright (c) 2012-2014, Leif Ringstad
   All rights reserved.
 
-  build: 2014-08-06
+  build: 2014-09-19
 
   License: https://github.com/leifcr/jquery-csswatch/blob/master/LICENSE
 */
